@@ -13,9 +13,9 @@ public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "author_id")
+    @Column(name = "author_id", nullable = false)
     private Long authorId;
 
-    @Column(name = "author_name")
+    @Column(name = "author_name", nullable = false)
     private String authorName;
 }

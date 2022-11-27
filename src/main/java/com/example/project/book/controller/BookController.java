@@ -24,8 +24,6 @@ public class BookController {
     @Tag(name = "도서 전체 조회", description = "도서 전체 조회 API")
     @GetMapping("/books")
     private ResponseEntity<BookFindAllResponse> findAllBooks(int page, int size) {
-        BookFindAllResponse bookFindAllResponse = bookService.findAllBooks(page, size);
-
-        return ResponseEntity.ok().body(bookFindAllResponse);
+        return ResponseEntity.ok().body(bookService.findAllBooks(page, size));
     }
 }

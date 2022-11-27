@@ -13,17 +13,17 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id")
+    @Column(name = "book_id", nullable = false)
     private Long bookId;
 
-    @Column(name = "book_name")
+    @Column(name = "book_name", nullable = false)
     private String bookName;
 
     @OneToOne
-    @JoinColumn(name = "publisher_id")
+    @JoinColumn(name = "publisher_id", nullable = false)
     private Publisher publisher;
 
     @OneToOne
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "author_id", nullable = false)
     private Author author;
 }

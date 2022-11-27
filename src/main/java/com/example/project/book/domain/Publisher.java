@@ -13,12 +13,12 @@ public class Publisher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "publisher_id")
+    @Column(name = "publisher_id", nullable = false)
     private Long publisherId;
 
-    @Column(name = "publisher_name")
+    @Column(name = "publisher_name", nullable = false)
     private String publisherName;
 
-    @Column(name = "publisher_address")
+    @Column(name = "publisher_address", nullable = false)
     private String publisherAddress;
 }
