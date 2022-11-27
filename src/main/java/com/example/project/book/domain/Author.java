@@ -1,4 +1,4 @@
-package com.example.book.domain;
+package com.example.project.book.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

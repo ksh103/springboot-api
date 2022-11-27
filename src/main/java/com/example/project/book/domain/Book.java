@@ -1,4 +1,4 @@
-package com.example.book.domain;
+package com.example.project.book.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,4 +18,12 @@ public class Book {
 
     @Column(name = "book_name")
     private String bookName;
+
+    @OneToOne
+    @JoinColumn(name = "publisher_id")
+    private Publisher publisher;
+
+    @OneToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
 }
