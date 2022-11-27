@@ -1,10 +1,12 @@
 package com.example.project.book.dto;
 
 import com.example.project.book.domain.Book;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @NoArgsConstructor
 public class BookFindResponse {
 
@@ -24,10 +26,11 @@ public class BookFindResponse {
     }
 
     public static BookFindResponse from (final Book book) {
-        return new BookFindResponse(
-                book.getBookId(),
-                book.getBookName(),
-                book.getAuthor().getAuthorName(),
-                book.getPublisher().getPublisherName());
+        return BookFindResponse.builder()
+                .bookId(book.getBookId())
+                .bookName(book.getBookName())
+                .authorName(book.getAuthor().getAuthorName())
+                .publisherName(book.getPublisher().getPublisherName())
+                .build();
     }
 }

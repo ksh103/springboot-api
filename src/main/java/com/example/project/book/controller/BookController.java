@@ -2,6 +2,7 @@ package com.example.project.book.controller;
 
 import com.example.project.book.dto.BookFindAllResponse;
 import com.example.project.book.service.BookService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,8 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @Tag(name = "도서 전체 조회", description = "도서 전체 조회 API")
+    @Tag(name = "도서 정보")
+    @Operation(summary = "도서 전체 조회", description = "도서 전체 목록을 조회한다.")
     @GetMapping("/books")
     private ResponseEntity<BookFindAllResponse> findAllBooks(int page, int size) {
         return ResponseEntity.ok().body(bookService.findAllBooks(page, size));
