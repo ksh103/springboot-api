@@ -30,7 +30,7 @@ public class Book {
     private Author author;
 
     @Builder
-    public Book(String bookName, Publisher publisher, Author author) {
+    public Book(final String bookName, final Publisher publisher, final Author author) {
         this.bookName = bookName;
         this.publisher = publisher;
         this.author = author;
