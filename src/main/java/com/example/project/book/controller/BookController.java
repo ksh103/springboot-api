@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @Slf4j
 @RestController
 @Tag(name = "도서 정보", description = "도서 정보 API")
@@ -48,6 +50,10 @@ public class BookController {
     private  ResponseEntity<BookAddResponse> addBook(@RequestBody BookAddRequest bookAddRequest) {
         log.info("addBook - Call");
 
-        return ResponseEntity.ok().body(bookService.addBook(bookAddRequest));
+        BookAddResponse bookAddResponse = bookService.addBook(bookAddRequest);
+
+        return ResponseEntity
+                .created(URI.create("/api/v1/books/" + bookAddResponse.getBookId()))
+                .build();
     }
 }

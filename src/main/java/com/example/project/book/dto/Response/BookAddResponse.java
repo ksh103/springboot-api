@@ -13,15 +13,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BookAddResponse {
 
-    private String bookName;
-    private String authorName;
-    private String publisherName;
+    private Long bookId;
 
     public static BookAddResponse from(final Book book) {
+//        return BookAddResponse.builder()
+//                .bookName(book.getBookName())
+//                .authorName(book.getAuthor().getAuthorName())
+//                .publisherName(book.getPublisher().getPublisherName())
+//                .build();
+
         return BookAddResponse.builder()
-                .bookName(book.getBookName())
-                .authorName(book.getAuthor().getAuthorName())
-                .publisherName(book.getPublisher().getPublisherName())
+                .bookId(book.getBookId())
                 .build();
     }
 }
