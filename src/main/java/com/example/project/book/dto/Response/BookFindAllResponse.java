@@ -18,9 +18,9 @@ public class BookFindAllResponse {
         this.books = books;
     }
 
-    public static BookFindAllResponse from(final Page<Book> findBooks) {
+    public static BookFindAllResponse fromEntity(final Page<Book> findBooks) {
         List<BookFindResponse> bookFindResponses = findBooks.stream()
-                .map(BookFindResponse::from)
+                .map(BookFindResponse::fromEntity)
                 .collect(Collectors.toList());
 
         return new BookFindAllResponse(bookFindResponses);

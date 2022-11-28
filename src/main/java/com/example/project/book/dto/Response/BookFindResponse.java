@@ -15,7 +15,7 @@ public class BookFindResponse {
     private String authorName;
     private String publisherName;
 
-    public static BookFindResponse from (final Book book) {
+    public static BookFindResponse fromEntity (final Book book) {
         return BookFindResponse.builder()
                 .bookId(book.getBookId())
                 .bookName(book.getBookName())

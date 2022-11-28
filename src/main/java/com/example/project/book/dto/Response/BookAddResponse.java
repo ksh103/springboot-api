@@ -15,13 +15,7 @@ public class BookAddResponse {
 
     private Long bookId;
 
-    public static BookAddResponse from(final Book book) {
-//        return BookAddResponse.builder()
-//                .bookName(book.getBookName())
-//                .authorName(book.getAuthor().getAuthorName())
-//                .publisherName(book.getPublisher().getPublisherName())
-//                .build();
-
+    public static BookAddResponse fromEntity(final Book book) {
         return BookAddResponse.builder()
                 .bookId(book.getBookId())
                 .build();

@@ -38,7 +38,7 @@ public class BookService {
     public BookFindAllResponse findAllBooks(int page, int size) {
         Page<Book> findBooks = bookRepository.findAll(PageRequest.of(page - 1, size, Sort.Direction.ASC, "bookId"));
 
-        return BookFindAllResponse.from(findBooks);
+        return BookFindAllResponse.fromEntity(findBooks);
     }
 
     @Transactional(readOnly = true)
@@ -46,7 +46,7 @@ public class BookService {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("찾는 도서가 없습니다."));
 
-        return BookFindResponse.from(book);
+        return BookFindResponse.fromEntity(book);
     }
 
     // 추가적으로 고려해볼 로직 1) 이미 등단된 작가라면? -> 작가 검색 기능 추가
@@ -73,6 +73,6 @@ public class BookService {
 
         Book saveBook = bookRepository.save(book);
 
-        return BookAddResponse.from(saveBook);
+        return BookAddResponse.fromEntity(saveBook);
     }
 }
