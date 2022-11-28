@@ -1,10 +1,9 @@
-package com.example.project.book.dto;
+package com.example.project.book.dto.Response;
 
 import com.example.project.book.domain.Book;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @Builder

@@ -1,5 +1,6 @@
 package com.example.project.book.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,4 +19,9 @@ public class Author {
 
     @Column(name = "author_name", nullable = false)
     private String authorName;
+
+    @Builder
+    private Author(final String authorName) {
+        this.authorName = authorName;
+    }
 }

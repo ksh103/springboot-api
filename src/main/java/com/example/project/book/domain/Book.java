@@ -1,5 +1,7 @@
 package com.example.project.book.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,4 +28,11 @@ public class Book {
     @OneToOne
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
+
+    @Builder
+    public Book(String bookName, Publisher publisher, Author author) {
+        this.bookName = bookName;
+        this.publisher = publisher;
+        this.author = author;
+    }
 }

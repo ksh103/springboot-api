@@ -1,4 +1,4 @@
-package com.example.project.book.dto;
+package com.example.project.book.dto.Response;
 
 import com.example.project.book.domain.Book;
 import lombok.Getter;
