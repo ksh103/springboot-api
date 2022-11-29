@@ -1,5 +1,6 @@
 package com.example.project.book.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

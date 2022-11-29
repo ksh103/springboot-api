@@ -4,7 +4,7 @@ import com.example.project.book.domain.Author;
 import com.example.project.book.domain.Book;
 import com.example.project.book.domain.Publisher;
 import com.example.project.book.dto.Request.BookAddRequest;
-import com.example.project.book.dto.Response.BookAddResponse;
+import com.example.project.book.dto.Response.BookResponse;
 import com.example.project.book.dto.Response.BookFindAllResponse;
 import com.example.project.book.dto.Response.BookFindResponse;
 import com.example.project.book.repository.AuthorRepository;
@@ -51,28 +51,34 @@ public class BookService {
 
     // 추가적으로 고려해볼 로직 1) 이미 등단된 작가라면? -> 작가 검색 기능 추가
     // 추가적으로 고려해볼 로직 2) 작가 검색 기능 추가 후 -> 등단 되어 있지 않은 작가라면 작가 추가
-    public BookAddResponse addBook(final BookAddRequest bookAddRequest) {
-
-        // 1. 다양하게 보여주기 위해 출판사의 경우 이미 등록된 출판사 목록 중 활용한다는 가정
-        // 2. 작가의 경우 사용자가 직접 등록 -> DB에 반영되어야 할 것
-        Optional<Publisher> publisher = publisherRepository.findById(bookAddRequest.getPublisherId());
-
-        // 작가 먼저 등록
-        Author author = Author.builder()
-                .authorName(bookAddRequest.getAuthorName())
-                .build();
-
-        Author saveAuthor = authorRepository.save(author);
+    public BookResponse addBook(final BookAddRequest bookAddRequest) {
+        // 출판사, 작가 정보 있는 지 확인
+        Publisher publisher = publisherIsCheck(bookAddRequest.getPublisherId());
+        Author author = authorIsCheck(bookAddRequest.getAuthorId());
 
         // 도서 정보에 책 제목, 출판사 정보, 작가 정보 저장
         Book book = Book.builder()
                 .bookName(bookAddRequest.getBookName())
-                .publisher(publisher.get())
-                .author(saveAuthor)
+                .publisher(publisher)
+                .author(author)
                 .build();
 
         Book saveBook = bookRepository.save(book);
 
-        return BookAddResponse.fromEntity(saveBook);
+        return BookResponse.fromEntity(saveBook);
+    }
+
+    public Publisher publisherIsCheck(final Long publisherId) {
+        Publisher publisher = publisherRepository.findById(publisherId)
+                .orElseThrow(() -> new RuntimeException("찾는 출판사가 없습니다."));
+
+        return publisher;
+    }
+
+    public Author authorIsCheck(final Long authorId) {
+        Author author = authorRepository.findById(authorId)
+                .orElseThrow(() -> new RuntimeException("찾는 작가가 없습니다."));
+
+        return author;
     }
 }

@@ -1,7 +1,7 @@
 package com.example.project.book.controller;
 
 import com.example.project.book.dto.Request.BookAddRequest;
-import com.example.project.book.dto.Response.BookAddResponse;
+import com.example.project.book.dto.Response.BookResponse;
 import com.example.project.book.dto.Response.BookFindAllResponse;
 import com.example.project.book.dto.Response.BookFindResponse;
 import com.example.project.book.service.BookService;
@@ -47,10 +47,10 @@ public class BookController {
     @Tag(name = "도서 정보")
     @Operation(summary = "도서 정보 등록", description = "도서 정보를 등록한다.")
     @PostMapping("")
-    private  ResponseEntity<BookAddResponse> addBook(@RequestBody BookAddRequest bookAddRequest) {
+    private ResponseEntity<BookResponse> addBook(@RequestBody BookAddRequest bookAddRequest) {
         log.info("addBook - Call");
 
-        BookAddResponse bookAddResponse = bookService.addBook(bookAddRequest);
+        BookResponse bookAddResponse = bookService.addBook(bookAddRequest);
 
         return ResponseEntity
                 .created(URI.create("/api/v1/books/" + bookAddResponse.getBookId()))
