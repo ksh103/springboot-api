@@ -10,6 +10,7 @@ import com.example.project.book.dto.Response.BookFindResponse;
 import com.example.project.book.repository.AuthorRepository;
 import com.example.project.book.repository.BookRepository;
 import com.example.project.book.repository.PublisherRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,20 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 @Transactional
 public class BookService {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final PublisherRepository publisherRepository;
-
-    public BookService(final BookRepository bookRepository,
-                       final AuthorRepository authorRepository,
-                       final PublisherRepository publisherRepository) {
-        this.bookRepository = bookRepository;
-        this.authorRepository = authorRepository;
-        this.publisherRepository = publisherRepository;
-    }
 
     @Transactional(readOnly = true)
     public BookFindAllResponse findAllBooks(int page, int size) {
@@ -68,6 +62,7 @@ public class BookService {
         return BookResponse.fromEntity(saveBook);
     }
 
+    @Transactional(readOnly = true)
     public Publisher publisherIsCheck(final Long publisherId) {
         Publisher publisher = publisherRepository.findById(publisherId)
                 .orElseThrow(() -> new RuntimeException("찾는 출판사가 없습니다."));
@@ -75,6 +70,7 @@ public class BookService {
         return publisher;
     }
 
+    @Transactional(readOnly = true)
     public Author authorIsCheck(final Long authorId) {
         Author author = authorRepository.findById(authorId)
                 .orElseThrow(() -> new RuntimeException("찾는 작가가 없습니다."));

@@ -8,6 +8,7 @@ import com.example.project.book.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,15 +17,12 @@ import java.net.URI;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @Tag(name = "도서 정보", description = "도서 정보 API")
 @RequestMapping("/api/v1/books")
 public class BookController {
 
     private final BookService bookService;
-
-    public BookController(final BookService bookService) {
-        this.bookService = bookService;
-    }
 
     @Tag(name = "도서 정보")
     @Operation(summary = "도서 전체 조회", description = "도서 전체 목록을 조회한다.")
