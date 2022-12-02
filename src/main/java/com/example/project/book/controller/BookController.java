@@ -54,4 +54,15 @@ public class BookController {
                 .created(URI.create("/api/v1/books/" + bookAddResponse.getBookId()))
                 .build();
     }
+
+    @Tag(name = "도서 정보")
+    @Operation(summary = "도서 정보 삭제", description = "도서 정보를 삭제한다.")
+    @DeleteMapping("/{bookId}")
+    private ResponseEntity<Void> deleteBook(@Parameter(description = "도서 ID", required = true) @PathVariable Long bookId){
+        log.info("deleteBook - Call");
+
+        bookService.deleteBook(bookId);
+
+        return ResponseEntity.noContent().build();
+    }
 }

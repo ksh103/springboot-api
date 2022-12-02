@@ -64,6 +64,14 @@ public class BookService {
         return BookResponse.fromEntity(saveBook);
     }
 
+    public void deleteBook(final Long bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("찾는 도서가 없습니다."));
+
+        bookRepository.delete(book);
+    }
+
+
     @Transactional(readOnly = true)
     public Publisher publisherIsCheck(final Long publisherId) {
         Publisher publisher = publisherRepository.findById(publisherId)
