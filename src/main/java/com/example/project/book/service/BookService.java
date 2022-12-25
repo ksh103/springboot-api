@@ -64,9 +64,18 @@ public class BookService {
         return BookResponse.fromEntity(saveBook);
     }
 
+    public Long modifyBook(final Long bookId, final BookModifyRequest bookModifyRequest) {
+        Book bookCheck = bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalArgumentException("찾는 도서가 없습니다."));
+
+        bookCheck.BookModify(bookModifyRequest.getBookName());
+
+        return bookId;
+    }
+
     public void deleteBook(final Long bookId) {
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("찾는 도서가 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("찾는 도서가 없습니다."));
 
         bookRepository.delete(book);
     }
@@ -75,7 +84,7 @@ public class BookService {
     @Transactional(readOnly = true)
     public Publisher publisherIsCheck(final Long publisherId) {
         Publisher publisher = publisherRepository.findById(publisherId)
-                .orElseThrow(() -> new RuntimeException("찾는 출판사가 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("찾는 출판사가 없습니다."));
 
         return publisher;
     }
@@ -83,7 +92,7 @@ public class BookService {
     @Transactional(readOnly = true)
     public Author authorIsCheck(final Long authorId) {
         Author author = authorRepository.findById(authorId)
-                .orElseThrow(() -> new RuntimeException("찾는 작가가 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("찾는 작가가 없습니다."));
 
         return author;
     }

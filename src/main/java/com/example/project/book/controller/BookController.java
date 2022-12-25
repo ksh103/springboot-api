@@ -1,6 +1,7 @@
 package com.example.project.book.controller;
 
 import com.example.project.book.dto.Request.BookAddRequest;
+import com.example.project.book.dto.Request.BookModifyRequest;
 import com.example.project.book.dto.Response.BookResponse;
 import com.example.project.book.dto.Response.BookFindAllResponse;
 import com.example.project.book.dto.Response.BookFindResponse;
@@ -54,6 +55,20 @@ public class BookController {
                 .created(URI.create("/api/v1/books/" + bookAddResponse.getBookId()))
                 .build();
     }
+
+    @Tag(name = "도서 정보")
+    @Operation(summary = "도서 정보 수정", description = "도서 정보를 수정한다.")
+    @PutMapping("/{bookId}")
+    private ResponseEntity<BookResponse> modifyBook(@Parameter(description = "도서 ID", required = true) @PathVariable Long bookId, @RequestBody BookModifyRequest bookModifyRequest) {
+        log.info("modifyBook - Call");
+
+        Long bookModifyId = bookService.modifyBook(bookId, bookModifyRequest);
+
+        return ResponseEntity
+                .created(URI.create("/api/v1/books" + bookModifyId))
+                .build();
+    }
+
 
     @Tag(name = "도서 정보")
     @Operation(summary = "도서 정보 삭제", description = "도서 정보를 삭제한다.")

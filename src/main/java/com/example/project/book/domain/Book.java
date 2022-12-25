@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Entity
 @Getter
 @NoArgsConstructor
-@Entity
+@AllArgsConstructor
 @Table(name = "book")
 public class Book {
 
@@ -28,6 +29,10 @@ public class Book {
     @OneToOne
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
+
+    public void BookModify(final String bookName) {
+        this.bookName = bookName;
+    }
 
     @Builder
     public Book(final String bookName, final Publisher publisher, final Author author) {
