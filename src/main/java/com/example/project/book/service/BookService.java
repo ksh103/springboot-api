@@ -23,7 +23,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class BookService {
 
     private final BookRepository bookRepository;
@@ -47,6 +46,7 @@ public class BookService {
 
     // 추가적으로 고려해볼 로직 1) 이미 등단된 작가라면? -> 작가 검색 기능 추가
     // 추가적으로 고려해볼 로직 2) 작가 검색 기능 추가 후 -> 등단 되어 있지 않은 작가라면 작가 추가
+    @Transactional
     public BookResponse addBook(final BookAddRequest bookAddRequest) {
         // 출판사, 작가 정보 있는 지 확인
         Publisher publisher = publisherIsCheck(bookAddRequest.getPublisherId());
@@ -64,6 +64,7 @@ public class BookService {
         return BookResponse.fromEntity(saveBook);
     }
 
+    @Transactional
     public Long modifyBook(final Long bookId, final BookModifyRequest bookModifyRequest) {
         Book bookCheck = bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("찾는 도서가 없습니다."));
@@ -73,6 +74,7 @@ public class BookService {
         return bookId;
     }
 
+    @Transactional
     public void deleteBook(final Long bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("찾는 도서가 없습니다."));
@@ -80,8 +82,6 @@ public class BookService {
         bookRepository.delete(book);
     }
 
-
-    @Transactional(readOnly = true)
     public Publisher publisherIsCheck(final Long publisherId) {
         Publisher publisher = publisherRepository.findById(publisherId)
                 .orElseThrow(() -> new IllegalArgumentException("찾는 출판사가 없습니다."));
@@ -89,7 +89,6 @@ public class BookService {
         return publisher;
     }
 
-    @Transactional(readOnly = true)
     public Author authorIsCheck(final Long authorId) {
         Author author = authorRepository.findById(authorId)
                 .orElseThrow(() -> new IllegalArgumentException("찾는 작가가 없습니다."));
