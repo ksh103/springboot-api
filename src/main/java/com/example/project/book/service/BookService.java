@@ -46,8 +46,11 @@ public class BookService {
     @Transactional
     public BookResponse addBook(final BookAddRequest bookAddRequest) {
         // 출판사, 작가 정보 있는 지 확인
-        Publisher publisher = publisherIsCheck(bookAddRequest.getPublisherId());
-        Author author = authorIsCheck(bookAddRequest.getAuthorId());
+        Publisher publisher = publisherRepository.findById(bookAddRequest.getPublisherId())
+                .orElseThrow(() -> new IllegalArgumentException("찾는 출판사가 없습니다."));
+
+        Author author = authorRepository.findById(bookAddRequest.getAuthorId())
+                .orElseThrow(() -> new IllegalArgumentException("찾는 작가가 없습니다."));
 
         // 도서 정보에 책 제목, 출판사 정보, 작가 정보 저장
         Book book = Book.builder()
@@ -79,19 +82,5 @@ public class BookService {
                 .orElseThrow(() -> new IllegalArgumentException("찾는 도서가 없습니다."));
 
         bookRepository.delete(book);
-    }
-
-    public Publisher publisherIsCheck(final Long publisherId) {
-        Publisher publisher = publisherRepository.findById(publisherId)
-                .orElseThrow(() -> new IllegalArgumentException("찾는 출판사가 없습니다."));
-
-        return publisher;
-    }
-
-    public Author authorIsCheck(final Long authorId) {
-        Author author = authorRepository.findById(authorId)
-                .orElseThrow(() -> new IllegalArgumentException("찾는 작가가 없습니다."));
-
-        return author;
     }
 }
