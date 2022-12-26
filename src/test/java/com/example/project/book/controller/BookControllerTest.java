@@ -5,9 +5,13 @@ import com.example.project.book.service.BookService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,4 +58,25 @@ public class BookControllerTest {
                 .andExpect(jsonPath("$.publisherName").exists());
 
     }
+
+    @Test
+    @DisplayName("pageable 파라미터 검증")
+    void evaluates_pageable_parameter() throws Exception {
+
+        mockMvc.perform(get("/api/v1/books")
+                        .param("page", "0")
+                        .param("size", "20")
+                        .param("sort", "bookId.desc"))
+                .andExpect(status().isOk());
+
+        ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
+
+        verify(bookService).findAllBooks(pageableCaptor.capture());
+        PageRequest pageRequest = (PageRequest) pageableCaptor.getValue();
+
+        assertEquals(0, pageRequest.getPageNumber());
+        assertEquals(20, pageRequest.getPageSize());
+        assertEquals(Sort.by("bookId", "desc"), pageRequest.withSort(Sort.by("bookId", "desc")).getSort());
+    }
+
 }
