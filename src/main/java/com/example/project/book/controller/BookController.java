@@ -11,6 +11,10 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,10 +32,10 @@ public class BookController {
     @Tag(name = "도서 정보")
     @Operation(summary = "도서 전체 조회", description = "도서 전체 목록을 조회한다.")
     @GetMapping("")
-    private ResponseEntity<BookFindAllResponse> findAllBooks(int page, int size) {
+    private ResponseEntity<BookFindAllResponse> findAllBooks(@PageableDefault(size = 20) @SortDefault(sort = "bookId", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("findAllBooks - Call");
 
-        return ResponseEntity.ok().body(bookService.findAllBooks(page, size));
+        return ResponseEntity.ok().body(bookService.findAllBooks(pageable));
     }
 
     @Tag(name = "도서 정보")

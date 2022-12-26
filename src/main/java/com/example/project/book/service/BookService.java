@@ -14,6 +14,7 @@ import com.example.project.book.repository.PublisherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +28,8 @@ public class BookService {
     private final PublisherRepository publisherRepository;
 
     @Transactional(readOnly = true)
-    public BookFindAllResponse findAllBooks(int page, int size) {
-        Page<Book> findBooks = bookRepository.findAll(PageRequest.of(page - 1, size, Sort.Direction.ASC, "bookId"));
+    public BookFindAllResponse findAllBooks(final Pageable pageable) {
+        Page<Book> findBooks = bookRepository.findAll(pageable);
 
         return BookFindAllResponse.fromEntity(findBooks);
     }
