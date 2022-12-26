@@ -18,9 +18,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class BookService {
@@ -65,13 +62,15 @@ public class BookService {
     }
 
     @Transactional
-    public Long modifyBook(final Long bookId, final BookModifyRequest bookModifyRequest) {
-        Book bookCheck = bookRepository.findById(bookId)
+    public BookResponse modifyBook(final Long bookId, final BookModifyRequest bookModifyRequest) {
+        Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("찾는 도서가 없습니다."));
 
-        bookCheck.BookModify(bookModifyRequest.getBookName());
+        book.Modify(bookModifyRequest.getBookName());
 
-        return bookId;
+        Book modifyBook = bookRepository.saveAndFlush(book);
+
+        return BookResponse.fromEntity(modifyBook);
     }
 
     @Transactional

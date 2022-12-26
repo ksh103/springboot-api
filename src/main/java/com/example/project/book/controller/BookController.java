@@ -62,10 +62,12 @@ public class BookController {
     private ResponseEntity<BookResponse> modifyBook(@Parameter(description = "도서 ID", required = true) @PathVariable Long bookId, @RequestBody BookModifyRequest bookModifyRequest) {
         log.info("modifyBook - Call");
 
-        Long bookModifyId = bookService.modifyBook(bookId, bookModifyRequest);
+//        Long bookModifyId = bookService.modifyBook(bookId, bookModifyRequest);
+
+        BookResponse bookResponse = bookService.modifyBook(bookId, bookModifyRequest);
 
         return ResponseEntity
-                .created(URI.create("/api/v1/books" + bookModifyId))
+                .created(URI.create("/api/v1/books" + bookResponse.getBookId()))
                 .build();
     }
 

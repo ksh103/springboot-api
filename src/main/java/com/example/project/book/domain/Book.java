@@ -30,7 +30,7 @@ public class Book {
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
 
-    public void BookModify(final String bookName) {
+    public void setBookName(final String bookName) {
         this.bookName = bookName;
     }
 
@@ -39,5 +39,9 @@ public class Book {
         this.bookName = bookName;
         this.publisher = publisher;
         this.author = author;
+    }
+
+    public void Modify(final String bookName) {
+        this.bookName = bookName;
     }
 }

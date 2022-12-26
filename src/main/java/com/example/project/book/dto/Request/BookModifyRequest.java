@@ -8,9 +8,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BookModifyRequest {
     private String bookName;
-
-    @Builder
-    public BookModifyRequest(final String bookName) {
-        this.bookName = bookName;
-    }
 }
