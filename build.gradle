@@ -53,6 +53,10 @@ dependencies {
 	// Json
 	implementation group: 'org.json', name: 'json', version: '20160810'
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation group: 'org.springframework.security', name: 'spring-security-test'
+
 }
 
 tasks.named('test') {
